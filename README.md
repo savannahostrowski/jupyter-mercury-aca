@@ -19,7 +19,7 @@ The fastest way for you to get this application up and running on Azure is to us
 3. Run the following command to initialize the project, provision Azure resources, and deploy the application code.
 
 ```
-azd up --template savannahostrowski/python-jupyter-azd
+azd up --template savannahostrowski/python-mercury-notebooks-azd
 ```
 
 ## How to modify this template
