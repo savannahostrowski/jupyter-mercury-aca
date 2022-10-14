@@ -1,7 +1,6 @@
 param environmentName string
 param location string = resourceGroup().location
 param principalId string = ''
-param apiImageName string = ''
 param webImageName string = ''
 
 // Container apps host (including container registry)
@@ -10,6 +9,7 @@ module containerApps './core/host/container-apps.bicep' = {
   params: {
     environmentName: environmentName
     location: location
+    logAnalyticsWorkspaceName: monitoring.outputs.logAnalyticsWorkspaceName
   }
 }
 
@@ -20,15 +20,34 @@ module web './app/web.bicep' = {
     environmentName: environmentName
     location: location
     imageName: webImageName
+    applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.containerAppsEnvironmentName
     containerRegistryName: containerApps.outputs.containerRegistryName
   }
 }
 
 
+// Store secrets in a keyvault
+module keyVault './core/security/keyvault.bicep' = {
+  name: 'keyvault'
+  params: {
+    environmentName: environmentName
+    location: location
+    principalId: principalId
+  }
+}
 
+// Monitor application with Azure Monitor
+module monitoring './core/monitor/monitoring.bicep' = {
+  name: 'monitoring'
+  params: {
+    environmentName: environmentName
+    location: location
+  }
+}
 
-
+output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.containerRegistryEndpoint
 output AZURE_CONTAINER_REGISTRY_NAME string = containerApps.outputs.containerRegistryName
+output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.keyVaultEndpoint
 output WEB_URI string = web.outputs.WEB_URI

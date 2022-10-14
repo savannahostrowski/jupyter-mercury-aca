@@ -1,7 +1,6 @@
 param environmentName string
 param location string = resourceGroup().location
 
-param apiName string = ''
 param applicationInsightsName string = ''
 param containerAppsEnvironmentName string = ''
 param containerRegistryName string = ''
@@ -20,19 +19,29 @@ module web '../core/host/container-app.bicep' = {
     containerAppsEnvironmentName: containerAppsEnvironmentName
     containerRegistryName: containerRegistryName
     env: [
-    
       {
-        name: 'APP_API_BASE_URL'
-        value: 'https://${api.properties.configuration.ingress.fqdn}'
+        name: 'APP_APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsights.properties.ConnectionString
+      }
+      {
+        name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+        value: applicationInsights.properties.ConnectionString
       }
     ]
     imageName: !empty(imageName) ? imageName : 'nginx:latest'
     keyVaultName: keyVault.name
     serviceName: serviceName
-    targetPort: 80
+    targetPort: 8000
   }
 }
 
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing = {
+  name: !empty(applicationInsightsName) ? applicationInsightsName : '${abbrs.insightsComponents}${resourceToken}'
+}
+
+resource keyVault 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
+  name: !empty(keyVaultName) ? keyVaultName : '${abbrs.keyVaultVaults}${resourceToken}'
+}
 
 output WEB_NAME string = web.outputs.name
 output WEB_URI string = web.outputs.uri
