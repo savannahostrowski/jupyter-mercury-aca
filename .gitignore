@@ -1,0 +1,4 @@
+.azure
+venv/
+src/celery.sqlite
+src/celerybeat-schedule
