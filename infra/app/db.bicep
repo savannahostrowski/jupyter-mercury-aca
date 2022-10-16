@@ -15,6 +15,7 @@ param collections array = [
     indexKey: '_id'
   }
 ]
+
 param cosmosDatabaseName string = 'Todo'
 param keyVaultName string
 
