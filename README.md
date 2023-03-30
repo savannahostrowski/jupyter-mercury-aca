@@ -22,7 +22,8 @@ The fastest way for you to get this application up and running on Azure is to us
 3. Run the following command to initialize the project, provision Azure resources, and deploy the application code.
 
 ```
-azd up --template savannahostrowski/jupyter-mercury-aca
+azd init --template savannahostrowski/jupyter-mercury-aca
+azd up
 ```
 
 At the end of this step, you'll be able to visit a URL to see the web app + the Jupyter notebooks in `src/`.
