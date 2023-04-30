@@ -1,4 +1,4 @@
-# Jupyter Notebooks Rendered with Mercury on Azure Container Apps 
+# A web application for sharing interactive Jupyter notebooks using Mercury
 
 This is a skeleton repo/template/blueprint that renders runnable, interactive Jupyter Notebooks in the browser using [Mercury](https://github.com/mljar/mercury) via Azure Container Apps.
 
