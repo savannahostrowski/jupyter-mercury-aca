@@ -20,7 +20,6 @@ module web './app/web.bicep' = {
     environmentName: environmentName
     location: location
     imageName: webImageName
-    applicationInsightsName: monitoring.outputs.applicationInsightsName
     containerAppsEnvironmentName: containerApps.outputs.containerAppsEnvironmentName
     containerRegistryName: containerApps.outputs.containerRegistryName
   }
@@ -45,7 +44,6 @@ module monitoring './core/monitor/monitoring.bicep' = {
   }
 }
 
-output APPLICATIONINSIGHTS_CONNECTION_STRING string = monitoring.outputs.applicationInsightsConnectionString
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = containerApps.outputs.containerRegistryEndpoint
 output AZURE_CONTAINER_REGISTRY_NAME string = containerApps.outputs.containerRegistryName
 output AZURE_KEY_VAULT_ENDPOINT string = keyVault.outputs.keyVaultEndpoint
