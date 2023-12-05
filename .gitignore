@@ -1,0 +1,8 @@
+.azure
+.venv/
+.python-version
+src/celerybeat-schedule.bak
+src/celerybeat-schedule.dat
+src/celerybeat-schedule.dir
+src/django-errors.log
+src/celery.sqlite
